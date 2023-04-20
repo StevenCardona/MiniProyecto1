@@ -5,6 +5,7 @@
  */
 package View;
 
+import Model.Player;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
@@ -18,7 +19,7 @@ public class RequestPlayerInfoView extends javax.swing.JPanel {
      * Creates new form RequestPlayerInfoView
      */
     public RequestPlayerInfoView(JPanel container) {
-        initComponents();        
+        initComponents();
         this.containerPanel = container;
 
     }
@@ -43,6 +44,7 @@ public class RequestPlayerInfoView extends javax.swing.JPanel {
         animalOption = new javax.swing.JRadioButton();
         fruitOption = new javax.swing.JRadioButton();
         returnButton = new javax.swing.JButton();
+        errorsLabel = new javax.swing.JLabel();
 
         jButton1.setText("jButton1");
 
@@ -84,6 +86,7 @@ public class RequestPlayerInfoView extends javax.swing.JPanel {
 
         topicOptions.add(colorOption);
         colorOption.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        colorOption.setSelected(true);
         colorOption.setText("Colores");
         colorOption.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,6 +133,9 @@ public class RequestPlayerInfoView extends javax.swing.JPanel {
         returnButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         returnButton.setText("Volver");
 
+        errorsLabel.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
+        errorsLabel.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -149,7 +155,9 @@ public class RequestPlayerInfoView extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
-                                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(errorsLabel)
+                                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(26, 26, 26))))
         );
         layout.setVerticalGroup(
@@ -159,9 +167,11 @@ public class RequestPlayerInfoView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(errorsLabel)
+                .addGap(22, 22, 22)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(returnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -170,15 +180,35 @@ public class RequestPlayerInfoView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        RequestPlayerInfoView view = new RequestPlayerInfoView(containerPanel);
-        view.setSize(800, 450);
-        view.setLocation(0,0);
+        String name = nameField.getText();
+        String topic = getTopic();
 
-        containerPanel.removeAll();
-        containerPanel.add(view, BorderLayout.CENTER);
-        containerPanel.revalidate();
-        containerPanel.repaint();
+        if (!name.trim().isEmpty() || name.trim().length() > 0) {
+
+            Player player = new Player(name);
+
+            GameView view = new GameView(containerPanel, player, topic);
+            view.setSize(800, 450);
+            view.setLocation(0, 0);
+
+            containerPanel.removeAll();
+            containerPanel.add(view, BorderLayout.CENTER);
+            containerPanel.revalidate();
+            containerPanel.repaint();
+        } else {
+            errorsLabel.setText("Ingresa el nombre");
+        }
     }//GEN-LAST:event_playButtonActionPerformed
+
+    private String getTopic() {
+        if (animalOption.isSelected()) {
+            return "Animales";
+        } else if (fruitOption.isSelected()) {
+            return "Frutas";
+        } else {
+            return "Colores";
+        }
+    }
 
     private void colorOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorOptionActionPerformed
         // TODO add your handling code here:
@@ -192,6 +222,7 @@ public class RequestPlayerInfoView extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton animalOption;
     private javax.swing.JRadioButton colorOption;
+    private javax.swing.JLabel errorsLabel;
     private javax.swing.JRadioButton fruitOption;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
