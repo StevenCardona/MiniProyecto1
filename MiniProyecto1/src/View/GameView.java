@@ -5,20 +5,29 @@
  */
 package View;
 
+import Controller.*;
+import Model.*;
+import Resources.Data;
+import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
 /**
  *
- * @author PLATAFORMA
+ * @author STEVEN.CARDONA
  */
 public class GameView extends javax.swing.JPanel {
 
     /**
      * Creates new form GameView
      */
-    public GameView(JPanel container) {
+    public GameView(JPanel container, Player player, String topic) {
         initComponents();
         this.containerPanel = container;
+
+        game = new Game(player, topic, Data.getWordList(topic));
+        playerName.setText(game.getPlayer().getNombre());
+        topicLabel.setText(game.getTopic());
+        incompletedWordLabel.setText(game.getCurrent_word().getShow_word());
     }
 
     /**
@@ -30,19 +39,20 @@ public class GameView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        playerName = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        failuresLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        correctsLabels = new javax.swing.JLabel();
+        attemps = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        E = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        incompletedWordLabel = new javax.swing.JLabel();
+        buttonVowel_A = new javax.swing.JButton();
+        buttonVowel_E = new javax.swing.JButton();
+        buttonVowel_I = new javax.swing.JButton();
+        buttonVowel_O = new javax.swing.JButton();
+        buttonVowel_U = new javax.swing.JButton();
+        topicLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setToolTipText("Juego");
@@ -50,20 +60,21 @@ public class GameView extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(800, 450));
         setPreferredSize(new java.awt.Dimension(800, 450));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Steven Cardona Betancur");
+        playerName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("X");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("3");
+        failuresLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        failuresLabel.setText("0");
 
         jLabel4.setText("✔");
 
-        jLabel5.setText("15");
+        correctsLabels.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        correctsLabels.setText("0");
 
-        jLabel6.setText("18");
+        attemps.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        attemps.setText("0");
 
         jPanel1.setBackground(new java.awt.Color(233, 233, 233));
 
@@ -78,44 +89,60 @@ public class GameView extends javax.swing.JPanel {
             .addGap(0, 293, Short.MAX_VALUE)
         );
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("BUH");
+        incompletedWordLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        incompletedWordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jButton1.setBackground(new java.awt.Color(232, 232, 232));
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jButton1.setText("A");
-        jButton1.setBorderPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonVowel_A.setBackground(new java.awt.Color(232, 232, 232));
+        buttonVowel_A.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        buttonVowel_A.setText("A");
+        buttonVowel_A.setBorderPainted(false);
+        buttonVowel_A.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                buttonVowel_AActionPerformed(evt);
             }
         });
 
-        E.setBackground(new java.awt.Color(232, 232, 232));
-        E.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        E.setText("E");
-        E.setBorderPainted(false);
-
-        jButton3.setBackground(new java.awt.Color(232, 232, 232));
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jButton3.setText("I");
-        jButton3.setBorderPainted(false);
-
-        jButton4.setBackground(new java.awt.Color(232, 232, 232));
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jButton4.setText("O");
-        jButton4.setBorderPainted(false);
-
-        jButton2.setBackground(new java.awt.Color(232, 232, 232));
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jButton2.setText("U");
-        jButton2.setBorderPainted(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        buttonVowel_E.setBackground(new java.awt.Color(232, 232, 232));
+        buttonVowel_E.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        buttonVowel_E.setText("E");
+        buttonVowel_E.setBorderPainted(false);
+        buttonVowel_E.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                buttonVowel_EActionPerformed(evt);
             }
         });
+
+        buttonVowel_I.setBackground(new java.awt.Color(232, 232, 232));
+        buttonVowel_I.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        buttonVowel_I.setText("I");
+        buttonVowel_I.setBorderPainted(false);
+        buttonVowel_I.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonVowel_IActionPerformed(evt);
+            }
+        });
+
+        buttonVowel_O.setBackground(new java.awt.Color(232, 232, 232));
+        buttonVowel_O.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        buttonVowel_O.setText("O");
+        buttonVowel_O.setBorderPainted(false);
+        buttonVowel_O.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonVowel_OActionPerformed(evt);
+            }
+        });
+
+        buttonVowel_U.setBackground(new java.awt.Color(232, 232, 232));
+        buttonVowel_U.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        buttonVowel_U.setText("U");
+        buttonVowel_U.setBorderPainted(false);
+        buttonVowel_U.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonVowel_UActionPerformed(evt);
+            }
+        });
+
+        topicLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -128,32 +155,36 @@ public class GameView extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(incompletedWordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(26, 26, 26)
-                                .addComponent(E)
-                                .addGap(26, 26, 26)
-                                .addComponent(jButton3)
-                                .addGap(26, 26, 26)
-                                .addComponent(jButton4)
+                                .addComponent(buttonVowel_A)
+                                .addGap(22, 22, 22)
+                                .addComponent(buttonVowel_E)
+                                .addGap(22, 22, 22)
+                                .addComponent(buttonVowel_I, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2)
-                                .addGap(0, 15, Short.MAX_VALUE))))
+                                .addComponent(buttonVowel_O)
+                                .addGap(18, 18, 18)
+                                .addComponent(buttonVowel_U)
+                                .addGap(0, 23, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(playerName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
+                        .addComponent(failuresLabel)
                         .addGap(41, 41, 41)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
+                        .addComponent(correctsLabels)
                         .addGap(41, 41, 41)
-                        .addComponent(jLabel6)
+                        .addComponent(attemps)
                         .addGap(12, 12, 12)))
                 .addGap(12, 12, 12))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(topicLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,51 +192,103 @@ public class GameView extends javax.swing.JPanel {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
+                        .addComponent(playerName)
                         .addComponent(jLabel2)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel6))
+                        .addComponent(failuresLabel)
+                        .addComponent(attemps))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel5)
+                        .addComponent(correctsLabels)
                         .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(88, 88, 88)
+                .addGap(63, 63, 63)
+                .addComponent(topicLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(129, 129, 129)
+                        .addComponent(incompletedWordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(96, 96, 96)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(E)
-                            .addComponent(jButton3)
-                            .addComponent(jButton4)
-                            .addComponent(jButton2)))
+                            .addComponent(buttonVowel_A)
+                            .addComponent(buttonVowel_E)
+                            .addComponent(buttonVowel_I)
+                            .addComponent(buttonVowel_O)
+                            .addComponent(buttonVowel_U)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void buttonVowel_AActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVowel_AActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        validateVowel("a");
+    }//GEN-LAST:event_buttonVowel_AActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void buttonVowel_UActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVowel_UActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        validateVowel("u");
+    }//GEN-LAST:event_buttonVowel_UActionPerformed
 
+    private void buttonVowel_EActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVowel_EActionPerformed
+        // TODO add your handling code here:
+        validateVowel("e");
+    }//GEN-LAST:event_buttonVowel_EActionPerformed
+
+    private void buttonVowel_IActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVowel_IActionPerformed
+        // TODO add your handling code here:
+        validateVowel("i");
+    }//GEN-LAST:event_buttonVowel_IActionPerformed
+
+    private void buttonVowel_OActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVowel_OActionPerformed
+        // TODO add your handling code here:
+        validateVowel("o");
+    }//GEN-LAST:event_buttonVowel_OActionPerformed
+
+    private void validateVowel(String vowel) {
+        Attempt at = game.validateAttempt(vowel, game.getCurrent_word().getMissing_vowel());
+        updateAttempts();
+        game.addAttemp(at);
+
+        if (at.getIs_correct()) {
+            int finishGame = game.removeWord(game.getCurrent_word());
+            
+            System.out.println(finishGame);
+        
+            if (finishGame == 0) {
+                EndView view = new EndView(containerPanel, game);
+                view.setSize(800, 450);
+                view.setLocation(0, 0);
+
+                containerPanel.removeAll();
+                containerPanel.add(view, BorderLayout.CENTER);
+                containerPanel.revalidate();
+                containerPanel.repaint();
+            } else {
+                incompletedWordLabel.setText(game.getCurrent_word().getShow_word());
+            }
+        }
+    }
+
+    public void updateAttempts() {
+        attemps.setText(String.valueOf(game.getNumber_attemps()));
+        correctsLabels.setText(String.valueOf(game.getNumber_corrects()));
+        failuresLabel.setText(String.valueOf(game.getNumber_failures()));
+    }
+
+    private Game game;
     private JPanel containerPanel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton E;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel attemps;
+    private javax.swing.JButton buttonVowel_A;
+    private javax.swing.JButton buttonVowel_E;
+    private javax.swing.JButton buttonVowel_I;
+    private javax.swing.JButton buttonVowel_O;
+    private javax.swing.JButton buttonVowel_U;
+    private javax.swing.JLabel correctsLabels;
+    private javax.swing.JLabel failuresLabel;
+    private javax.swing.JLabel incompletedWordLabel;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel playerName;
+    private javax.swing.JLabel topicLabel;
     // End of variables declaration//GEN-END:variables
 }
